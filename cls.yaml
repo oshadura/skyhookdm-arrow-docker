@@ -20,4 +20,4 @@ data:
     debug journal = 20
 metadata:
   name: rook-config-override
-  namespace: rook-ceph
+  namespace: rook-ceph-skyhookdm

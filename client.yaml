@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: rook-ceph-playground
-  namespace: rook-ceph
+  namespace: rook-ceph-skyhookdm
 spec:
   restartPolicy: Always
   containers:
