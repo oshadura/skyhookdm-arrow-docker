@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: skyhook-pv-claim
+  namespace: rook-ceph-skyhookdm
+  labels:
+    app: rook-ceph-skyhookdm
+spec:
+  storageClassName: rook-cephfs
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
