@@ -2,6 +2,8 @@
 
 Docker image containing SkyhookDM built on top of Arrow along with C++ and Python API clients.
 
+[![docker pulls](https://img.shields.io/docker/pulls/uccross/skyhookdm-arrow)](https://hub.docker.com/r/uccross/skyhookdm-arrow)
+
 ### Deploying SkyhookDM-Arrow on a Rook cluster
 * Change the Ceph image tag in the Rook CRD [here](https://github.com/rook/rook/blob/master/cluster/examples/kubernetes/ceph/cluster.yaml#L24) to the image built from [this](./docker) dir (or you can quickly use `uccross/skyhookdm-arrow:vX.Y.Z` as the image tag) to change your Rook Ceph cluster to the `vX.Y.Z` version of SkyhookDM Arrow. 
 
@@ -25,19 +27,19 @@ Docker image containing SkyhookDM built on top of Arrow along with C++ and Pytho
   4) Copy the Ceph configuration and Keyring from some OSD/MON Pod to the playground Pod.
   ```bash
   # copy the ceph config
-  kubectl -n rook-ceph cp <any-osd/mon-pod>:/var/lib/rook/rook-ceph/rook-ceph.config ceph.conf
-  kubectl -n rook-ceph cp ceph.conf rook-ceph-playground:/etc/ceph/ceph.conf
-  # NOTE: You need to change the keyring path to /etc/ceph/keyring in the config manually.
+  kubectl -n [namespace] cp [any-osd/mon-pod]:/var/lib/rook/[namespace]/[namespace].config ceph.conf
+  kubectl -n [namespace] cp ceph.conf rook-ceph-playground:/etc/ceph/ceph.conf
 
   # copy the keyring
-  kubectl -n rook-ceph cp <any-osd/mon-pod>:/var/lib/rook/rook-ceph/client.admin.keyring keyring
-  kubectl -n rook-ceph cp keyring rook-ceph-playground:/etc/ceph/keyring
+  kubectl -n [namespace] cp [any-osd/mon-pod]:/var/lib/rook/[namespace]/client.admin.keyring keyring
+  kubectl -n [namespace] cp keyring rook-ceph-playground:/etc/ceph/keyring
   ```
+  **NOTE:** You would need to change the keyring path in the ceph config to `/etc/ceph/keyring` manually.
 
   5) Check the connection to the cluster from the client Pod.
   ```bash
   # get a shell into the client pod
-  kubectl -n rook-ceph exec -it rook-ceph-playground bash
+  kubectl -n [namespace] exec -it rook-ceph-playground bash
 
   # check the connection status
   $ ceph -s
@@ -50,8 +52,8 @@ Docker image containing SkyhookDM built on top of Arrow along with C++ and Pytho
   yum install ceph-fuse
   mkdir -p /mnt/cephfs
   ceph-fuse --client_fs cephfs /mnt/cephfs 
-  # the client_fs value can be different. Please check the filesystem.yaml file for details.
   ```
+  **NOTE:** The `client_fs` name can be different. Please check the filesystem.yaml file for the filesystem name you are using.
 
   4) Download some example dataset into `/path/to/cephfs/mount`. For example,
   ```bash
