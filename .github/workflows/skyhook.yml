@@ -15,18 +15,13 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: SkyhookDM CD
+name: SkyhookDM Official Image
 
 on:
   push:
-
-  pull_request:
     paths:
-    - '.github/workflows/*'
-    - 'docker/*'
-
-  release:
-    types: [published]
+      - .github/workflows/skyhook.yml
+      - docker/*
 
 jobs:
   build:
@@ -41,7 +36,7 @@ jobs:
           https://github.com/uccross/skyhookdm-arrow-docker \
           builder/
 
-    - name: Build Image (Dev)
+    - name: Build Image (Debug)
       if: ${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/heads/v') }}
       env:
         CEPH_VERSION: v16.2

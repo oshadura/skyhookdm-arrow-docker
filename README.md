@@ -2,12 +2,21 @@
 
 Docker image containing SkyhookDM built on top of Arrow along with C++ and Python API clients.
 
-[![docker pulls](https://img.shields.io/docker/pulls/uccross/skyhookdm-arrow)](https://hub.docker.com/r/uccross/skyhookdm-arrow)
+SkyhookDM-Arrow: [![skyhook image pulls](https://img.shields.io/docker/pulls/uccross/skyhookdm-arrow)](https://hub.docker.com/r/uccross/skyhookdm-arrow)
+
+SkyhookDM-Arrow-Benchmark: [![skyhook benchmark image pulls](https://img.shields.io/docker/pulls/uccross/skyhookdm-arrow-benchmark)](https://hub.docker.com/r/uccross/skyhookdm-arrow-benchmark)
+
+### Triggering release builds
+
+```bash
+./release_skyhook.sh [tag]
+./release_skyhook_benchmark.sh [tag]
+```
 
 ### Deploying SkyhookDM-Arrow on a Rook cluster
 * Change the Ceph image tag in the Rook CRD [here](https://github.com/rook/rook/blob/master/cluster/examples/kubernetes/ceph/cluster.yaml#L24) to the image built from [this](./docker) dir (or you can quickly use `uccross/skyhookdm-arrow:vX.Y.Z` as the image tag) to change your Rook Ceph cluster to the `vX.Y.Z` version of SkyhookDM Arrow. 
 
-* After the cluster is updated, we need to deploy a Pod with the PyArrow (with RadosParquetFileFormat API) library installed to start interacting with the cluster. This can be achieved by following these steps:
+* After the cluster is updated, we need to deploy a Pod with the PyArrow (with SkyhookFileFormat API) library installed to start interacting with the cluster. This can be achieved by following these steps:
 
   1) Update the ConfigMap with configuration options to be able to load the arrow CLS plugins.
   ```bash
